@@ -17,7 +17,7 @@
           {{setka(employee, department)}}
         </td>
       </tr>
-      <tr v-if="employees.length==0">
+      <tr v-if="employees.length === 0">
         <td colspan="7" class="text-center"><h2>Данные отсутствуют</h2></td>
       </tr>
       </tbody>
@@ -41,14 +41,17 @@ export default {
   async asyncData ({$axios}) {
     const employees = await $axios.$get('http://localhost:8000/api/employees')
     const departments = await $axios.$get('http://localhost:8000/api/departments')
-    return {employees: employees.data, departments: departments.data}
+    return {
+      employees: employees.data,
+      departments: departments.data
+    }
   },
   methods: {
-    setka(employee, department) {
-      if (employee.departments.find(x=>x.id === department.id)) {
+    setka: function (employee, department) {
+      if (employee.departments.find(x => x.id === department.id))
         return '✓'
-      }
-      else return ''
+      else
+        return null
     }
   },
 }

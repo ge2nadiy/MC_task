@@ -26,12 +26,12 @@
           {{departments(employee)}}
         </td>
         <td>
-          <a href="#" @click.prevent="editEmpl(employee)">Изменить</a>
+          <a href="#" @click.prevent="employeeEdit(employee)">Изменить</a>
           |
-          <a href="#" @click.prevent="delEmpl(employee)">Удалить</a>
+          <a href="#" @click.prevent="employeeDelete(employee)">Удалить</a>
         </td>
       </tr>
-      <tr v-if="employees.length==0">
+      <tr v-if="employees.length === 0">
         <td colspan="7" class="text-center"><h2>Данные отсутствуют</h2></td>
       </tr>
       </tbody>
@@ -53,7 +53,9 @@
   export default {
     async asyncData({$axios}) {
       const employees = await $axios.$get('http://localhost:8000/api/employees')
-      return {employees: employees.data}
+      return {
+        employees: employees.data
+      }
     },
     data() {
       return {
@@ -62,12 +64,14 @@
       }
     },
     methods: {
-      editEmpl(employee) {
+      employeeEdit(employee) {
         this.$router.push('/employees/' + employee.id)
       },
-      delEmpl(employee) {
+      employeeDelete(employee) {
         this.$axios.$delete('http://localhost:8000/api/employees/' + employee.id, employee)
-          .then((res) => {this.employees = this.employees.filter(item => item.id !== employee.id)})
+          .then((res) => {
+            this.employees = this.employees.filter(item => item.id !== employee.id)
+          })
       },
       departments(employee) {
         let department = employee.departments.map(function (depart) {

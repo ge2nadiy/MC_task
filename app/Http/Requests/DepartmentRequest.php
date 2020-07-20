@@ -27,13 +27,4 @@ class DepartmentRequest extends FormRequest
             'name' => 'required|max:20',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'name.required' => 'Введите название отдела',
-            'name.max' => 'Слишком длинное название(превышает 20 символов)',
-        ];
-    }
-
 }

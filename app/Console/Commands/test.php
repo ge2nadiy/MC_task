@@ -22,7 +22,7 @@ class test extends Command
 
     public function handle()
     {
-        $empl_count = Department::query()->first()->employees;
-        dd($empl_count == []);
+        $employeeCount = Department::query()->first()->employees;
+        dd($employeeCount == []);
     }
 }

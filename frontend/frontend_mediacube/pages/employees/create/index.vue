@@ -8,26 +8,26 @@
       </div>
     </div>
     <div class="container">
-      <form class="form-horizontal" @submit.prevent="addEmpl()">
+      <form class="form-horizontal" @submit.prevent="employeeSave()">
         <br>
-        <label for="">Имя</label>
+        <label>Имя</label>
         <input type="text" class="form-control" name="name" v-model="employee.first_name">
-        <label for="">Фамилия</label>
+        <label>Фамилия</label>
         <input type="text" class="form-control" name="name" v-model="employee.last_name">
-        <label for="">Отчество</label>
+        <label>Отчество</label>
         <input type="text" class="form-control" name="name" v-model="employee.middle_name">
-        <label for="">Пол</label>
+        <label>Пол</label>
         <br>
         <input type="radio" value="true" v-model="employee.sex">
         <label>Мужской</label>
         <input type="radio" value="false" v-model="employee.sex">
         <label>Женский</label>
         <br>
-        <label for="">Зарплата</label>
+        <label>Зарплата</label>
         <input type="number" class="form-control" name="name" v-model="employee.salary">
-        <label for="">Отделы</label>
+        <label>Отделы</label>
         <div v-for="department in departments" :key="department.id">
-          <input type="checkbox" v-bind:value="department.id" v-model="employee.selectedDepart">
+          <input type="checkbox" :value="department.id" v-model="employee.selectedDepart">
           <label>{{department.name}}</label><br>
         </div>
         <hr />
@@ -41,13 +41,8 @@
   export default {
     async asyncData({$axios}) {
       const departments = await $axios.$get('http://localhost:8000/api/departments')
-      return {departments: departments.data}
-    },
-    methods: {
-      addEmpl() {
-        this.$axios.$post('http://localhost:8000/api/employees', this.employee)
-          .then((res) => {this.$router.push('/employees')})
-          .catch(e => this.errors = e.response.data.errors)
+      return {
+        departments: departments.data
       }
     },
     data () {
@@ -63,6 +58,15 @@
         departments: null,
         errors: null,
       }
-    }
+    },
+    methods: {
+      employeeSave() {
+        this.$axios.$post('http://localhost:8000/api/employees', this.employee)
+          .then((res) => {
+            this.$router.push('/employees')
+          })
+          .catch(e => this.errors = e.response.data.errors)
+      }
+    },
   }
 </script>

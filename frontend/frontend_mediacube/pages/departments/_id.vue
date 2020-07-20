@@ -11,7 +11,7 @@
     </div>
     <div class="container">
       <form class="form-horizontal" @submit.prevent="editDepart()">
-        <label for="">Название отдела</label>
+        <label>Название отдела</label>
         <input type="text" class="form-control" name="name" v-model="department.name">
         <hr />
         <input class="btn btn-primary" type="submit" value="Сохранить">
@@ -24,7 +24,15 @@
   export default {
     async asyncData({$axios, params}) {
       const department = await $axios.$get('http://localhost:8000/api/departments/' + params.id)
-      return {department: department.data}
+      return {
+        department: department.data
+      }
+    },
+    data () {
+      return {
+        department: null,
+        errors: null,
+      }
     },
     methods: {
       editDepart() {
@@ -36,11 +44,5 @@
           .catch(e => this.errors = e.response.data.errors)
         }
       },
-    data () {
-      return {
-        department: null,
-        errors: null,
-      }
-    }
   }
 </script>

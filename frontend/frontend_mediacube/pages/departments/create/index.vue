@@ -8,8 +8,8 @@
       </div>
     </div>
     <div class="container">
-      <form class="form-horizontal" @submit.prevent="addDepart()">
-        <label for="">Название отдела</label>
+      <form class="form-horizontal" @submit.prevent="departmentSave()">
+        <label>Название отдела</label>
         <input type="text" class="form-control" name="name" v-model="department.name">
         <hr />
         <input class="btn btn-primary" type="submit" value="Сохранить">
@@ -20,14 +20,6 @@
 
 <script>
   export default {
-    methods: {
-       addDepart() {
-         this.$axios
-          .$post('http://localhost:8000/api/departments', this.department)
-          .then((res) => {this.$router.push('/departments')})
-          .catch(e => this.errors = e.response.data.errors)
-      }
-    },
     data () {
       return {
         department: {
@@ -35,6 +27,16 @@
         },
         errors: null,
       }
-    }
+    },
+    methods: {
+       departmentSave() {
+         this.$axios
+          .$post('http://localhost:8000/api/departments', this.department)
+          .then((res) => {
+            this.$router.push('/departments')
+          })
+          .catch(e => this.errors = e.response.data.errors)
+      }
+    },
   }
 </script>

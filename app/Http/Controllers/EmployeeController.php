@@ -14,15 +14,11 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employee = Employee::query()->get()->load('departments');
+        $employees = Employee::query()->get()->load('departments');
 
-        return new EmployeeResourceCollection($employee);
+        return new EmployeeResourceCollection($employees);
     }
 
-    public function create()
-    {
-        //
-    }
 
     public function store(EmployeeRequest $request)
     {
@@ -35,10 +31,6 @@ class EmployeeController extends Controller
         return new EmployeeResource($employee->load('departments'));
     }
 
-    public function edit(Employee $employee)
-    {
-        //
-    }
 
     public function update(EmployeeRequest $request, Employee $employee)
     {
